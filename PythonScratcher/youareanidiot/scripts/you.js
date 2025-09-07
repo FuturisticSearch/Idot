@@ -128,43 +128,7 @@ window.onkeydown = function() {
 	var keyCode = event.keyCode;
 	
 	if (keyCode == 17 || keyCode == 18 || keyCode == 46 || keyCode == 115) {	
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");	
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    	alert("UwU");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("You dumb?????!");
-    alert("!"); 
-    alert("!"); 
-    alert("!"); 
-    alert("!"); 
+
 		proCreate();
 	}
 	
