@@ -30,8 +30,7 @@ faudio.addEventListener('timeupdate', function() {
         this.currentTime = 0;
         this.play();
     }
-}
-);
+});
 /* [Oct 2021] End part. */
 
 function bookmark() {
@@ -49,12 +48,29 @@ var xPos = 400;
 var yPos = -100;
 var flagRun = 1;
 
+// 🔽 ADDED: To track popup windows
+var popupWindows = [];
+
 function changeTitle(title) {
 	document.title = title;
 }
 
 function openWindow(url) {
-	aWindow = window.open(url, "_blank", 'menubar=no, status=no, toolbar=no, resizable=no, width=357, height=330, titlebar=no, alwaysRaised=yes');
+	var aWindow = window.open(url, "_blank", 'menubar=no, status=no, toolbar=no, resizable=no, width=357, height=330, titlebar=no, alwaysRaised=yes');
+	
+	// 🔽 ADDED: Save reference
+	if (aWindow) {
+		popupWindows.push(aWindow);
+	}
+}
+
+function closeAllPopups() {
+	for (var i = 0; i < popupWindows.length; i++) {
+		if (popupWindows[i] && !popupWindows[i].closed) {
+			popupWindows[i].close();
+		}
+	}
+	popupWindows = []; // Clear list
 }
 
 function proCreate() {	
@@ -120,22 +136,25 @@ window.onmouseout = function () {
 };
 
 window.oncontextmenu = function() {
-	
 	return false;
 }
 
-window.onkeydown = function() {	
+window.onkeydown = function() {
 	var keyCode = event.keyCode;
-	
-	if (keyCode == 17 || keyCode == 18 || keyCode == 46 || keyCode == 115) {	
 
+	if (keyCode == 17 || keyCode == 18 || keyCode == 46 || keyCode == 115) {
 		proCreate();
 	}
-	
+
+	// 🔽 ADDED: Close all popups when F2 is pressed
+	if (keyCode == 113) {
+		closeAllPopups();
+	}
+
 	return null;
 }
 
 window.onbeforeunload = function() {
     return "UwU";
 };
-/* [Oct 2021] End of amendments. */l
+/* [Oct 2021] End of amendments. */
