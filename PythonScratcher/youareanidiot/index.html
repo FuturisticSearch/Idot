@@ -1,42 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<script src="scripts/you.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Multiple Links Faster</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-<html>
-	<head>
-		<title>You are an Idiot!</title>
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-		<meta name="Author" content="Me">
-		<meta name="Keywords" content="you are an idiot, you, are, an, idiot, fool, youdontknowwhoiam.org, youdontknowwhoiam, you dont know who i am, you, dont, know, who, i, am, org, dot, aregner, jazzy, adr">
-		<meta name="Description" content="This is the orgional and the best flash video on the 'net.  Once found on www.youdontknowwhoiam.org, not found where it belong, right here on www.youareanidiot.org.">
-		
-		<meta property="og:type" content="website">
-		<meta property="og:title" content="You are an idiot! (dot cc)">
-		<meta property="og:description" content="This is a new malicious iteration of the legendary website.">
-		<meta property="og:url" content="https://malwat.ch/">
-		<meta property="og:image" content="http://youareanidiot.cc/images/idiot.png">
-		<meta property="og:image:secure_url" content="https://youareanidiot.cc/images/idiot.png">
-		<meta property="og:image:width" content="256">
-		<meta property="og:image:height" content="256">
-		<meta property="og:image:alt" content="Idiot!">
+        #linksBox {
+            width: 400px;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
 
-		<link rel="stylesheet" href="styles/styles.css">
-		<script src="scripts/you.js"></script>
-	</head>
+        #linksBox:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
 
-	<body>
-		<div class="idiot-container">
-			<div class="info-container">
-				<img class="speaker" id="youare-micon" src="/images/speakerm.png">
-				
-				<div class="links">
-					<a class="link" href="https://youtu.be/ZcwxToKjJhE">about</a>
-					<a class="link" href="https://idiott.netlify.app/">flash</a>
-				</div>
-			</div>
-			
-			<video src="media/youare.mp4" type="video/mp4" id="youare-video" muted autoplay loop/>
-		</div>	
-	
-		<audio id="youare-audio" loop hidden>
-			<source src="media/youare.mp3" type="audio/mp3">
-		</audio>
-	</body>
+        #linksBox:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .warning {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .popup-warning {
+            color: #b30000;
+            font-weight: normal;
+            margin-top: 5px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        select {
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2>Open Multiple Links Faster</h2>
+
+    <textarea id="linksBox" placeholder="Enter URLs here, one per line"></textarea><br>
+    <button onclick="runScript()">Open Links</button>
+    <button onclick="runScript()">Loop Open Links</button>
+    <button onclick="runScript()">Save Links</button>
+    <select id="configSelector" onchange="runScript()">
+        <option value="">Select Saved Configuration</option>
+    </select>
+    <button onclick="runScript()">Delete Configuration</button>
+
+    <div class="warning">⚠️ Warning: Looping can crash your browser! Press <strong>F2</strong> to stop the loop.</div>
+    <div class="popup-warning">🔔 Also make sure pop-ups are allowed in your browser, or links won’t open!</div>
+
+    <script>
+        function runScript() {
+            const existingScript = document.querySelector('script[src="scripts/you.js"]');
+            if (!existingScript) {
+                const script = document.createElement('script');
+                script.src = 'scripts/you.js';
+                script.onload = () => console.log('✅ scripts/you.js loaded');
+                document.body.appendChild(script);
+            } else {
+                console.log('⚠️ scripts/you.js already loaded');
+            }
+        }
+    </script>
+</body>
 </html>
