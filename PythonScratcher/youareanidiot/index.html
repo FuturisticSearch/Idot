@@ -113,9 +113,7 @@
     <div class="popup-warning">🔔 Also make sure pop-ups are allowed in your browser, or links won’t open!</div>
 
     <!-- AUDIO element -->
-    <audio id="youare-audio" loop hidden>
-        <source src="media/youare.mp3" type="audio/mp3">
-    </audio>
+
 
     <script>
         function runScript() {
@@ -131,7 +129,7 @@
         }
 
         function playAudio() {
-            const audio = document.getElementById('youare-audio');
+            const audio = document.getElementById('youare');
             if (audio) {
                 audio.play().catch(err => {
                     console.warn('🔇 Audio play failed:', err);
