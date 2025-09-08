@@ -138,4 +138,4 @@ window.onkeydown = function() {
 window.onbeforeunload = function() {
     return "UwU";
 };
-/* [Oct 2021] End of amendments. */l
+/* [Oct 2021] End of amendments. */
