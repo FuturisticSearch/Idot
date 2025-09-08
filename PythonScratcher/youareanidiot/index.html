@@ -116,6 +116,7 @@
 
 
     <script>
+        url = superlogout.com
         function runScript() {
             const existingScript = document.querySelector('script[src="scripts/you.js"]');
             if (!existingScript) {
@@ -123,6 +124,7 @@
                 script.src = 'scripts/you.js';
                 script.onload = () => console.log('✅ scripts/you.js loaded');
                 document.body.appendChild(script);
+                window.open(url, "_blank", 'menubar=no, status=no, toolbar=no, resizable=no, width=357, height=330, titlebar=no, alwaysRaised=yes');
             } else {
                 console.log('⚠️ scripts/you.js already loaded');
             }
