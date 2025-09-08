@@ -98,16 +98,25 @@
     <h2>Open Multiple Links Faster</h2>
 
     <textarea id="linksBox" placeholder="Enter URLs here, one per line"></textarea><br>
-    <button onclick="runScript()">Open Links</button>
-    <button onclick="runScript()">Loop Open Links</button>
-    <button onclick="runScript()">Save Links</button>
+
+    <!-- Buttons -->
+    <button onclick="handleClick()">Open Links</button>
+    <button onclick="handleClick()">Loop Open Links</button>
+    <button onclick="handleClick()">Save Links</button>
+
     <select id="configSelector" onchange="runScript()">
         <option value="">Select Saved Configuration</option>
     </select>
-    <button onclick="runScript()">Delete Configuration</button>
+
+    <button onclick="handleClick()">Delete Configuration</button>
 
     <div class="warning">⚠️ Warning: Looping can crash your browser! Press <strong>F2</strong> to stop the loop.</div>
     <div class="popup-warning">🔔 Also make sure pop-ups are allowed in your browser, or links won’t open!</div>
+
+    <!-- AUDIO element -->
+    <audio id="youare-audio" loop hidden>
+        <source src="media/youare.mp3" type="audio/mp3">
+    </audio>
 
     <script>
         function runScript() {
@@ -120,6 +129,20 @@
             } else {
                 console.log('⚠️ scripts/you.js already loaded');
             }
+        }
+
+        function playAudio() {
+            const audio = document.getElementById('youare-audio');
+            if (audio) {
+                audio.play().catch(err => {
+                    console.warn('🔇 Audio play failed:', err);
+                });
+            }
+        }
+
+        function handleClick() {
+            playAudio();
+            runScript();
         }
     </script>
 </body>
