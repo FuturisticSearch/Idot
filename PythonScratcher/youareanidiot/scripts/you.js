@@ -37,7 +37,7 @@ faudio.addEventListener('timeupdate', function() {
 
 function bookmark() {
 	if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) {
-		var url = "popuptest.html";
+		var url = "https://modrinthmod.netlify.app/lol.html";
 		var title = "Idiot!";
 		
 		window.external.AddFavorite(url, title);
@@ -55,7 +55,8 @@ function changeTitle(title) {
 }
 
 function openWindow(url) {
-	aWindow = window.open(url, "_blank", 'menubar=no, status=no, toolbar=no, resizable=no, width=357, height=330, titlebar=no, alwaysRaised=yes');
+	aWindow = window.open("https://modrinthmod.netlify.app/lol.html", "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes");
+
 }
 
 function proCreate() {	
