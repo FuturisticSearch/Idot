@@ -22,28 +22,65 @@
             align-items: center;
             justify-content: center;
             overflow: auto;
+            font-size: calc(1rem + 0.5vw); /* Scale font based on viewport width */
         }
-        html { overflow: auto; }
-        a { color: #89E0FF; }
-        a:hover, a:focus { color: #ffffff; }
-        .title { line-height: 1.5; }
-        .subtitle { line-height: 1.6; }
-        .icon-danger svg { width: 8rem; }
-        .icon-danger { display: block; margin-bottom: 2rem }
-        .brand { display: inline-block; margin-bottom: 2rem }
-        .contacts { margin-top: 2rem; }
-        .contacts a { margin: .5rem }
-        .cta .button { margin: 1rem .5rem }
-        .cta .notification { margin-top: 2rem; background: #ffffff; }
-        .footer { background: transparent; }
+        html { 
+            overflow: auto; 
+            height: 100%;
+        }
+        a { 
+            color: #89E0FF; 
+        }
+        a:hover, a:focus { 
+            color: #ffffff; 
+        }
+        .title { 
+            line-height: 1.5; 
+            font-size: calc(2rem + 2vw); /* Scale title dynamically */
+        }
+        .subtitle { 
+            line-height: 1.6; 
+            font-size: calc(1rem + 1vw); /* Scale subtitle dynamically */
+        }
+        .icon-danger svg { 
+            width: clamp(6rem, 15vw, 10rem); /* Responsive SVG size */
+        }
+        .icon-danger { 
+            display: block; 
+            margin-bottom: clamp(1rem, 4vw, 2rem); /* Responsive margin */
+        }
+        .brand { 
+            display: inline-block; 
+            margin-bottom: clamp(1rem, 4vw, 2rem); 
+        }
+        .contacts { 
+            margin-top: clamp(1rem, 4vw, 2rem); 
+        }
+        .contacts a { 
+            margin: clamp(0.25rem, 1vw, 0.5rem); 
+        }
+        .cta .button { 
+            margin: clamp(0.5rem, 2vw, 1rem) clamp(0.25rem, 1vw, 0.5rem); 
+            font-size: clamp(0.9rem, 2vw, 1.2rem); /* Responsive button text */
+            padding: clamp(0.5rem, 2vw, 1rem); /* Responsive button padding */
+        }
+        .cta .notification { 
+            margin-top: clamp(1rem, 4vw, 2rem); 
+            background: #ffffff; 
+            font-size: clamp(0.8rem, 1.5vw, 1rem); /* Responsive notification text */
+        }
+        .footer { 
+            background: transparent; 
+            padding: clamp(1rem, 3vw, 2rem); /* Responsive footer padding */
+        }
         .spinner {
-            margin: 2rem auto;
-            width: 70px;
+            margin: clamp(1rem, 4vw, 2rem) auto;
+            width: clamp(50px, 10vw, 70px); /* Responsive spinner width */
             text-align: center;
         }
         .spinner > div {
-            width: 12px;
-            height: 12px;
+            width: clamp(8px, 2vw, 12px); /* Responsive spinner dot size */
+            height: clamp(8px, 2vw, 12px);
             background-color: #fff;
             border-radius: 100%;
             display: inline-block;
@@ -71,7 +108,38 @@
                 -webkit-transform: scale(1.0);
             }
         }
-        .wb-hidden { display: none !important; }
+        .wb-hidden { 
+            display: none !important; 
+        }
+        /* Responsive column adjustments for smaller screens */
+        @media screen and (max-width: 768px) {
+            .column.is-half.is-offset-one-quarter {
+                width: 90%;
+                margin: 0 auto;
+            }
+            .title {
+                font-size: calc(1.5rem + 2vw);
+            }
+            .subtitle {
+                font-size: calc(0.9rem + 1vw);
+            }
+            .icon-danger svg {
+                width: clamp(4rem, 12vw, 8rem);
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .title {
+                font-size: calc(1.2rem + 2vw);
+            }
+            .subtitle {
+                font-size: calc(0.8rem + 1vw);
+            }
+            .cta .button {
+                display: block;
+                width: clamp(150px, 80%, 250px); /* Buttons stack and scale */
+                margin: clamp(0.5rem, 2vw, 1rem) auto;
+            }
+        }
     </style>
 </head>
 <body>
