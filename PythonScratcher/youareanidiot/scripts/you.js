@@ -1,6 +1,6 @@
 // Falešný dialog na začátku
 (function() {
-    confirm("Opravdu chcete opustit stránku?\nKlikněte na 'OK' pro opustit, 'Storno' pro pokračovat."); 
+    confirm("Opravdu chcete tuto akci vykonat?\nKlikněte na 'OK' pro opušťení, 'Storno' pro pokračování."); 
     // Nezáleží na tom, co uživatel klikne, pokračujeme dál
 })();
 
