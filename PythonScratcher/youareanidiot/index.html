@@ -191,8 +191,10 @@
             function attemptPopup() {
                 if (attempt >= maxAttempts || !popupsEnabled) {
                     closeAllPopups();
-                    // Save result to localStorage
-                    localStorage.setItem('popupAllowed', popupsEnabled);
+                    // Only save to localStorage if popups are enabled
+                    if (popupsEnabled) {
+                        localStorage.setItem('popupAllowed', true);
+                    }
                     callback(popupsEnabled);
                     return;
                 }
@@ -203,8 +205,7 @@
                 if (!success) {
                     popupsEnabled = false;
                     closeAllPopups();
-                    // Save result to localStorage
-                    localStorage.setItem('popupAllowed', false);
+                    // Do not save to localStorage if popups are blocked
                     callback(false);
                     return;
                 }
@@ -247,13 +248,15 @@
                             // For back button, redirect to a safe page
                             window.location.href = '/';
                         }
+                        // Remove spinner after processing
+                        spinner.remove();
                     });
                 } else {
                     // Show popup needed notification
                     document.getElementById('popup_needed').classList.remove('wb-hidden');
+                    // Remove spinner after showing notification
+                    spinner.remove();
                 }
-                // Remove spinner
-                spinner.remove();
             } else {
                 // Check popup permission if not stored
                 checkPopupPermission((isAllowed) => {
@@ -272,13 +275,15 @@
                                 // For back button, redirect to a safe page
                                 window.location.href = '/';
                             }
+                            // Remove spinner after processing
+                            spinner.remove();
                         });
                     } else {
                         // Show popup needed notification
                         document.getElementById('popup_needed').classList.remove('wb-hidden');
+                        // Remove spinner after showing notification
+                        spinner.remove();
                     }
-                    // Remove spinner
-                    spinner.remove();
                 });
             }
         }
