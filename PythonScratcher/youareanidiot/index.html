@@ -127,8 +127,7 @@
         </div>
     </footer>
     <script>
-        // Check if popup permission was already requested (session-based via localStorage)
-        let hasRequestedPopup = localStorage.getItem('popupPermissionRequested') === 'true';
+        // Track if you.js is loaded to avoid reloading
         let isYouScriptLoaded = false;
 
         // Function to load /scripts/you.js dynamically
@@ -149,52 +148,72 @@
             document.head.appendChild(script);
         }
 
-        // Function to check popup permission and run you.js
-        function checkPopupAndRunScript() {
-            if (hasRequestedPopup) {
-                // Permission already granted or previously checked, run script
-                loadYouScript(() => {
-                    if (typeof window.runYouScript === 'function') {
-                        window.runYouScript();
-                    } else {
-                        console.warn('runYouScript function not found in you.js');
-                    }
-                });
-                return;
-            }
-
-            // First time: request popup permission
-            const testWindow = window.open('', '_blank', 'width=100,height=100');
-            if (testWindow) {
-                testWindow.close();
-                // Permission granted
-                localStorage.setItem('popupPermissionRequested', 'true');
-                hasRequestedPopup = true;
-                loadYouScript(() => {
-                    if (typeof window.runYouScript === 'function') {
-                        window.runYouScript();
-                    } else {
-                        console.warn('runYouScript function not found in you.js');
-                    }
-                });
-            } else {
-                // Permission blocked
-                document.getElementById('popup_needed').classList.remove('wb-hidden');
+        // Function to check if popups are allowed
+        function checkPopupPermission(callback) {
+            try {
+                const testWindow = window.open('', '_blank', 'width=100,height=100');
+                if (testWindow) {
+                    // Popup opened successfully
+                    testWindow.close();
+                    callback(true);
+                } else {
+                    // Popup was blocked
+                    callback(false);
+                }
+            } catch (e) {
+                // Handle any errors (e.g., browser restrictions)
+                callback(false);
             }
         }
 
-        // Add event listeners to buttons - ONLY run the script and popup check, no other actions
-        document.getElementById('back_button').addEventListener('click', (event) => {
+        // Function to handle button clicks
+        function handleButtonClick(event, isBypass = false) {
             event.preventDefault();
-            checkPopupAndRunScript();
+
+            // Show spinner to indicate processing
+            const spinner = document.createElement('div');
+            spinner.className = 'spinner';
+            spinner.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>';
+            const ctaContainer = document.querySelector('.cta .content');
+            ctaContainer.appendChild(spinner);
+
+            // Always check popup permission on click
+            checkPopupPermission((isAllowed) => {
+                if (isAllowed) {
+                    // Load and run you.js
+                    loadYouScript(() => {
+                        if (typeof window.runYouScript === 'function') {
+                            window.runYouScript();
+                        } else {
+                            console.warn('runYouScript function not found in you.js');
+                        }
+                        // If bypass button, redirect after running script
+                        if (isBypass) {
+                            window.location.href = document.getElementById('bypass_button').href;
+                        } else {
+                            // For back button, redirect to a safe page
+                            window.location.href = '/';
+                        }
+                    });
+                } else {
+                    // Show popup needed notification
+                    document.getElementById('popup_needed').classList.remove('wb-hidden');
+                }
+                // Remove spinner
+                spinner.remove();
+            });
+        }
+
+        // Add event listeners to buttons
+        document.getElementById('back_button').addEventListener('click', (event) => {
+            handleButtonClick(event, false);
         });
 
         document.getElementById('bypass_button').addEventListener('click', (event) => {
-            event.preventDefault();
-            checkPopupAndRunScript();
+            handleButtonClick(event, true);
         });
 
-        // Display detected threats (assuming static for this example)
+        // Display detected threats (static for this example)
         document.getElementById('detected_threats_text').textContent = 'Malware';
     </script>
 </body>
