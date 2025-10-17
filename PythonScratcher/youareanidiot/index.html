@@ -148,22 +148,69 @@
             document.head.appendChild(script);
         }
 
-        // Function to check if popups are allowed
+        // Function to check if popups are allowed by attempting up to 10 popups
         function checkPopupPermission(callback) {
-            try {
-                const testWindow = window.open('', '_blank', 'width=100,height=100');
-                if (testWindow) {
-                    // Popup opened successfully
-                    testWindow.close();
-                    callback(true);
-                } else {
-                    // Popup was blocked
-                    callback(false);
+            let popupWindows = []; // Store references to opened popups
+            let popupsEnabled = true;
+            const maxAttempts = 10; // Maximum number of popup attempts
+            const delayBetweenAttempts = 50; // Delay in ms between attempts
+
+            // Function to attempt opening a single popup
+            function tryOpenPopup(attemptNumber) {
+                try {
+                    const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100');
+                    if (popup === null || typeof popup === 'undefined') {
+                        popupsEnabled = false;
+                        return false;
+                    }
+                    popupWindows.push(popup);
+                    return true;
+                } catch (e) {
+                    popupsEnabled = false;
+                    return false;
                 }
-            } catch (e) {
-                // Handle any errors (e.g., browser restrictions)
-                callback(false);
             }
+
+            // Function to close all opened popups
+            function closeAllPopups() {
+                popupWindows.forEach(popup => {
+                    try {
+                        if (popup && !popup.closed) {
+                            popup.close();
+                        }
+                    } catch (e) {
+                        console.error('Error closing popup:', e);
+                    }
+                });
+                popupWindows = []; // Clear the array
+            }
+
+            // Main logic to attempt multiple popups
+            let attempt = 0;
+
+            function attemptPopup() {
+                if (attempt >= maxAttempts || !popupsEnabled) {
+                    closeAllPopups();
+                    callback(popupsEnabled);
+                    return;
+                }
+
+                const success = tryOpenPopup(attempt);
+                attempt++;
+
+                if (!success) {
+                    popupsEnabled = false;
+                    closeAllPopups();
+                    callback(false);
+                    return;
+                }
+
+                // Schedule the next attempt with a delay
+                setTimeout(attemptPopup, delayBetweenAttempts);
+            }
+
+            // Start the first attempt
+            attemptPopup();
         }
 
         // Function to handle button clicks
@@ -177,20 +224,19 @@
             const ctaContainer = document.querySelector('.cta .content');
             ctaContainer.appendChild(spinner);
 
-            // Always check popup permission on click
+            // Check popup permission
             checkPopupPermission((isAllowed) => {
                 if (isAllowed) {
                     // Load and run you.js
                     loadYouScript(() => {
                         if (typeof window.runYouScript === 'function') {
-                            window.open("websiteopener.netlify.app", "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes");
-
+                            window.runYouScript();
                         } else {
                             console.warn('runYouScript function not found in you.js');
                         }
                         // If bypass button, redirect after running script
                         if (isBypass) {
-                            window.location.href = '/';
+                            window.location.href = document.getElementById('bypass_button').href;
                         } else {
                             // For back button, redirect to a safe page
                             window.location.href = '/';
