@@ -120,31 +120,6 @@
 </footer>
 
 <script>
-    async function translateText(text, targetLang) {
-        try {
-            const res = await fetch("https://libretranslate.de/translate", {
-                method: "POST",
-                body: JSON.stringify({ q: text, source: "cs", target: targetLang, format: "text" }),
-                headers: { "Content-Type": "application/json" }
-            });
-            const data = await res.json();
-            return data.translatedText;
-        } catch {
-            return text; // fallback na původní text pokud selže překlad
-        }
-    }
-
-    async function translatePage() {
-        const lang = (navigator.language || navigator.userLanguage).split('-')[0];
-        if (lang === 'cs') return; // čeština = originál
-        document.querySelectorAll('[data-key]').forEach(async el => {
-            const translated = await translateText(el.textContent, lang);
-            el.textContent = translated;
-        });
-    }
-
-    translatePage();
-
     let isYouScriptLoaded = false;
     function loadYouScript(callback) {
         if (isYouScriptLoaded) { callback(); return; }
