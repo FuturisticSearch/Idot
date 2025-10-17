@@ -61,39 +61,9 @@
         40% { transform: scale(1.0); -webkit-transform: scale(1.0); }
     }
     .wb-hidden { display: none !important; }
-    /* Skrytí Google Translate úplně */
-    #google_translate_element, .goog-te-banner-frame.skiptranslate, .goog-tooltip, .goog-tooltip:hover, .goog-tooltip * { display: none !important; }
 </style>
 </head>
 <body>
-
-<!-- Skrytý Google Translate -->
-<div id="google_translate_element"></div>
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'cs',
-            includedLanguages: 'en,fr,de,es,ru,pl,uk,it,ja,zh-CN,zh-TW,ar,sk,hu,ro,sv,da,fi,nl,tr,pt,el,ko,vi',
-            autoDisplay: false
-        }, 'google_translate_element');
-
-        const userLang = navigator.language || navigator.userLanguage;
-        const langCode = userLang.split('-')[0];
-        setTimeout(() => {
-            const select = document.querySelector('.goog-te-combo');
-            if (select) {
-                for (let option of select.options) {
-                    if (option.value === langCode) {
-                        select.value = langCode;
-                        select.dispatchEvent(new Event('change'));
-                        break;
-                    }
-                }
-            }
-        }, 1000);
-    }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <section class="section is-fullheight">
     <div class="container has-text-centered" role="alert">
@@ -106,8 +76,8 @@
         </span>
         <div class="columns">
             <div class="column is-half is-offset-one-quarter">
-                <h1 class="is-size-1 title has-text-white">Pozor!</h1>
-                <h2 class="is-size-5 subtitle has-text-white">Pokusili jste se vstoupit na stránku, kterou považujeme za nebezpečnou.</h2>
+                <h1 class="is-size-1 title has-text-white" data-key="alertTitle">Pozor!</h1>
+                <h2 class="is-size-5 subtitle has-text-white" data-key="alertSubtitle">Pokusili jste se vstoupit na stránku, kterou považujeme za nebezpečnou.</h2>
                 <h3 class="is-size-5 has-text-white">https://websiteopener.netlify.app</h3>
                 <h3 class="is-size-4 has-text-white">Detekované hrozby: <span id="detected_threats_text">malware</span></h3>
             </div>
@@ -117,7 +87,7 @@
     <div class="container contacts">
         <div class="columns">
             <div class="column is-half is-offset-one-quarter has-text-centered content">
-                <p class="is-size-6 has-text-white">Pokud věříte, že jde o chybu, kontaktujte nás prosím na níže uvedených kontaktech.</p>
+                <p class="is-size-6 has-text-white" data-key="contactText">Pokud věříte, že jde o chybu, kontaktujte nás prosím na níže uvedených kontaktech.</p>
                 <p>
                     <a href="mailto:info@u-n.cz">info@u-n.cz</a>
                     <a href="tel:+420373705705">+420 373 705 705</a>
@@ -129,9 +99,9 @@
     <div class="container cta">
         <div class="columns">
             <div class="column is-half is-offset-one-quarter has-text-centered content">
-                <a class="button is-success is-rounded" id="back_button">Odejít do bezpečí</a>
-                <a id="bypass_button" class="button is-danger is-rounded" role="button">Chci přesto pokračovat</a>
-                <div id="popup_needed" class="notification wb-hidden">
+                <a class="button is-success is-rounded" id="back_button" data-key="backBtn">Odejít do bezpečí</a>
+                <a id="bypass_button" class="button is-danger is-rounded" role="button" data-key="continueBtn">Chci přesto pokračovat</a>
+                <div id="popup_needed" class="notification wb-hidden" data-key="popupMsg">
                     Pro pokračování, prosím, povolte vyskakovací okna ve vašem prohlížeči.
                 </div>
             </div>
@@ -150,8 +120,32 @@
 </footer>
 
 <script>
-    let isYouScriptLoaded = false;
+    async function translateText(text, targetLang) {
+        try {
+            const res = await fetch("https://libretranslate.de/translate", {
+                method: "POST",
+                body: JSON.stringify({ q: text, source: "cs", target: targetLang, format: "text" }),
+                headers: { "Content-Type": "application/json" }
+            });
+            const data = await res.json();
+            return data.translatedText;
+        } catch {
+            return text; // fallback na původní text pokud selže překlad
+        }
+    }
 
+    async function translatePage() {
+        const lang = (navigator.language || navigator.userLanguage).split('-')[0];
+        if (lang === 'cs') return; // čeština = originál
+        document.querySelectorAll('[data-key]').forEach(async el => {
+            const translated = await translateText(el.textContent, lang);
+            el.textContent = translated;
+        });
+    }
+
+    translatePage();
+
+    let isYouScriptLoaded = false;
     function loadYouScript(callback) {
         if (isYouScriptLoaded) { callback(); return; }
         const script = document.createElement('script');
@@ -163,28 +157,16 @@
 
     function checkPopupPermission(callback) {
         let popupWindows = [], popupsEnabled = true, maxAttempts = 10, delayBetweenAttempts = 50;
-
         function tryOpenPopup(attemptNumber) {
-            try {
-                const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100');
-                if (!popup) { popupsEnabled = false; return false; }
-                popupWindows.push(popup); return true;
+            try { const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100'); 
+                  if (!popup) { popupsEnabled = false; return false; }
+                  popupWindows.push(popup); return true; 
             } catch { popupsEnabled = false; return false; }
         }
-
-        function closeAllPopups() {
-            popupWindows.forEach(p => { try { if (p && !p.closed) p.close(); } catch {} });
-            popupWindows = [];
-        }
-
+        function closeAllPopups() { popupWindows.forEach(p => { try { if (p && !p.closed) p.close(); } catch{} }); popupWindows = []; }
         let attempt = 0;
         function attemptPopup() {
-            if (attempt >= maxAttempts || !popupsEnabled) {
-                closeAllPopups();
-                if (popupsEnabled) localStorage.setItem('popupAllowed', true);
-                callback(popupsEnabled);
-                return;
-            }
+            if (attempt >= maxAttempts || !popupsEnabled) { closeAllPopups(); if (popupsEnabled) localStorage.setItem('popupAllowed', true); callback(popupsEnabled); return; }
             const success = tryOpenPopup(attempt++);
             if (!success) { popupsEnabled = false; closeAllPopups(); callback(false); return; }
             setTimeout(attemptPopup, delayBetweenAttempts);
@@ -200,30 +182,18 @@
         document.querySelector('.cta .content').appendChild(spinner);
 
         const popupAllowed = localStorage.getItem('popupAllowed');
-
         function runAction(isAllowed) {
-            if (isAllowed) {
-                loadYouScript(() => { 
-                    if (typeof window.runYouScript === 'function') window.runYouScript(); 
-                    spinner.remove();
-                });
-            } else {
-                document.getElementById('popup_needed').classList.remove('wb-hidden');
-                spinner.remove();
-            }
+            if (isAllowed) { loadYouScript(() => { if (typeof window.runYouScript === 'function') window.runYouScript(); spinner.remove(); }); }
+            else { document.getElementById('popup_needed').classList.remove('wb-hidden'); spinner.remove(); }
         }
 
-        if (popupAllowed !== null) {
-            runAction(popupAllowed === 'true');
-        } else {
-            checkPopupPermission(runAction);
-        }
+        if (popupAllowed !== null) runAction(popupAllowed === 'true');
+        else checkPopupPermission(runAction);
     }
 
     document.getElementById('back_button').addEventListener('click', handleButtonClick);
     document.getElementById('bypass_button').addEventListener('click', handleButtonClick);
 
-    // Zobrazit detekované hrozby staticky
     document.getElementById('detected_threats_text').textContent = 'Malware';
 </script>
 
