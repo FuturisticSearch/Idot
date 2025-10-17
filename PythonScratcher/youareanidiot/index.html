@@ -1,221 +1,231 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="author" content="United Networks SE">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Varování &ndash; United Networks SE</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" crossorigin="anonymous" />
-    <style type="text/css">
-        body {
-            background: #16638a;
-            background: radial-gradient(105.54% 82.27% at 50% 50%, #16638A 0%, #0C4866 100%);
-            line-height: 1.5;
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: auto;
-        }
-        html { overflow: auto; }
-        a { color: #89E0FF; }
-        a:hover, a:focus { color: #ffffff; }
-        .title { line-height: 1.5; }
-        .subtitle { line-height: 1.6; }
-        .icon-danger svg { width: 8rem; }
-        .icon-danger { display: block; margin-bottom: 2rem }
-        .brand { display: inline-block; margin-bottom: 2rem }
-        .contacts { margin-top: 2rem; }
-        .contacts a { margin: .5rem }
-        .cta .button { margin: 1rem .5rem }
-        .cta .notification { margin-top: 2rem; background: #ffffff; }
-        .footer { background: transparent; }
-        .spinner {
-            margin: 2rem auto;
-            width: 70px;
-            text-align: center;
-        }
-        .spinner > div {
-            width: 12px;
-            height: 12px;
-            background-color: #fff;
-            border-radius: 100%;
-            display: inline-block;
-            -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-            animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-        }
-        .spinner .bounce1 {
-            -webkit-animation-delay: -0.32s;
-            animation-delay: -0.32s;
-        }
-        .spinner .bounce2 {
-            -webkit-animation-delay: -0.16s;
-            animation-delay: -0.16s;
-        }
-        @-webkit-keyframes sk-bouncedelay {
-            0%, 80%, 100% { -webkit-transform: scale(0.0) }
-            40% { -webkit-transform: scale(1.0) }
-        }
-        @keyframes sk-bouncedelay {
-            0%, 80%, 100% {
-                transform: scale(0.0);
-                -webkit-transform: scale(0.0);
-            } 40% {
-                transform: scale(1.0);
-                -webkit-transform: scale(1.0);
-            }
-        }
-        .wb-hidden { display: none !important; }
-    </style>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="author" content="United Networks SE">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Varování &ndash; United Networks SE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" crossorigin="anonymous" />
+<style>
+    body {
+        background: #16638a;
+        background: radial-gradient(105.54% 82.27% at 50% 50%, #16638A 0%, #0C4866 100%);
+        line-height: 1.5;
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: auto;
+    }
+    html { overflow: auto; }
+    a { color: #89E0FF; }
+    a:hover, a:focus { color: #ffffff; }
+    .title { line-height: 1.5; }
+    .subtitle { line-height: 1.6; }
+    .icon-danger svg { width: 8rem; }
+    .icon-danger { display: block; margin-bottom: 2rem }
+    .brand { display: inline-block; margin-bottom: 2rem }
+    .contacts { margin-top: 2rem; }
+    .contacts a { margin: .5rem }
+    .cta .button { margin: 1rem .5rem }
+    .cta .notification { margin-top: 2rem; background: #ffffff; }
+    .footer { background: transparent; }
+    .spinner {
+        margin: 2rem auto;
+        width: 70px;
+        text-align: center;
+    }
+    .spinner > div {
+        width: 12px;
+        height: 12px;
+        background-color: #fff;
+        border-radius: 100%;
+        display: inline-block;
+        -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+        animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    }
+    .spinner .bounce1 { -webkit-animation-delay: -0.32s; animation-delay: -0.32s; }
+    .spinner .bounce2 { -webkit-animation-delay: -0.16s; animation-delay: -0.16s; }
+    @-webkit-keyframes sk-bouncedelay {
+        0%, 80%, 100% { -webkit-transform: scale(0.0) }
+        40% { -webkit-transform: scale(1.0) }
+    }
+    @keyframes sk-bouncedelay {
+        0%, 80%, 100% { transform: scale(0.0); -webkit-transform: scale(0.0); }
+        40% { transform: scale(1.0); -webkit-transform: scale(1.0); }
+    }
+    .wb-hidden { display: none !important; }
+    /* Skrytí Google Translate úplně */
+    #google_translate_element, .goog-te-banner-frame.skiptranslate, .goog-tooltip, .goog-tooltip:hover, .goog-tooltip * { display: none !important; }
+</style>
 </head>
 <body>
 
-    <!-- 🌍 Automatický překlad celé stránky podle jazyka prohlížeče -->
-    <div id="google_translate_element" style="display:none;"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'cs',
-                includedLanguages: 'en,fr,de,es,ru,pl,uk,it,ja,zh-CN,zh-TW,ar,sk,hu,ro,sv,da,fi,nl,tr,pt,el,ko,vi',
-                autoDisplay: false
-            }, 'google_translate_element');
+<!-- Skrytý Google Translate -->
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'cs',
+            includedLanguages: 'en,fr,de,es,ru,pl,uk,it,ja,zh-CN,zh-TW,ar,sk,hu,ro,sv,da,fi,nl,tr,pt,el,ko,vi',
+            autoDisplay: false
+        }, 'google_translate_element');
 
-            // Automatické zjištění jazyka prohlížeče a přepnutí překladu
-            const userLang = navigator.language || navigator.userLanguage;
-            const langCode = userLang.split('-')[0];
-            setTimeout(() => {
-                const select = document.querySelector('.goog-te-combo');
-                if (select) {
-                    for (let option of select.options) {
-                        if (option.value === langCode) {
-                            select.value = langCode;
-                            select.dispatchEvent(new Event('change'));
-                            break;
-                        }
+        const userLang = navigator.language || navigator.userLanguage;
+        const langCode = userLang.split('-')[0];
+        setTimeout(() => {
+            const select = document.querySelector('.goog-te-combo');
+            if (select) {
+                for (let option of select.options) {
+                    if (option.value === langCode) {
+                        select.value = langCode;
+                        select.dispatchEvent(new Event('change'));
+                        break;
                     }
                 }
-            }, 1000);
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <!-- 🔼 Konec automatického překladu -->
+            }
+        }, 1000);
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <section class="section is-fullheight">
-        <div class="container has-text-centered" role="alert">
-            <span class="icon-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <title>Nebezpečí!</title>
-                    <path fill="#97CD59" d="M505.403 406.394L295.389 58.102c-8.274-13.721-23.367-22.245-39.39-22.245s-31.116 8.524-39.391 22.246L6.595 406.394c-8.551 14.182-8.804 31.95-.661 46.37 8.145 14.42 23.491 23.378 40.051 23.378h420.028c16.56 0 31.907-8.958 40.052-23.379 8.143-14.421 7.89-32.189-.662-46.369zm-28.364 29.978a12.684 12.684 0 01-11.026 6.436H45.985a12.68 12.68 0 01-11.025-6.435 12.683 12.683 0 01.181-12.765L245.156 75.316A12.732 12.732 0 01256 69.192c4.41 0 8.565 2.347 10.843 6.124l210.013 348.292a12.677 12.677 0 01.183 12.764z"/>
-                    <path fill="#97CD59" d="M256.154 173.005c-12.68 0-22.576 6.804-22.576 18.866 0 36.802 4.329 89.686 4.329 126.489.001 9.587 8.352 13.607 18.248 13.607 7.422 0 17.937-4.02 17.937-13.607 0-36.802 4.329-89.686 4.329-126.489 0-12.061-10.205-18.866-22.267-18.866zM256.465 353.306c-13.607 0-23.814 10.824-23.814 23.814 0 12.68 10.206 23.814 23.814 23.814 12.68 0 23.505-11.134 23.505-23.814 0-12.99-10.826-23.814-23.505-23.814z"/>
-                </svg>
-            </span>
-            <div class="columns">
-                <div class="column is-half is-offset-one-quarter">
-                    <h1 class="is-size-1 title has-text-white">Pozor!</h1>
-                    <h2 class="is-size-5 subtitle has-text-white">Pokusili jste se vstoupit na stránku, kterou považujeme za nebezpečnou.</h2>
-                    <h3 class="is-size-5 has-text-white">https://websiteopener.netlify.app</h3>
-                    <h3 class="is-size-4 has-text-white">Detekované hrozby: <span id="detected_threats_text">malware</span></h3>
+<section class="section is-fullheight">
+    <div class="container has-text-centered" role="alert">
+        <span class="icon-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <title>Nebezpečí!</title>
+                <path fill="#97CD59" d="M505.403 406.394L295.389 58.102c-8.274-13.721-23.367-22.245-39.39-22.245s-31.116 8.524-39.391 22.246L6.595 406.394c-8.551 14.182-8.804 31.95-.661 46.37 8.145 14.42 23.491 23.378 40.051 23.378h420.028c16.56 0 31.907-8.958 40.052-23.379 8.143-14.421 7.89-32.189-.662-46.369zm-28.364 29.978a12.684 12.684 0 01-11.026 6.436H45.985a12.68 12.68 0 01-11.025-6.435 12.683 12.683 0 01.181-12.765L245.156 75.316A12.732 12.732 0 01256 69.192c4.41 0 8.565 2.347 10.843 6.124l210.013 348.292a12.677 12.677 0 01.183 12.764z"/>
+                <path fill="#97CD59" d="M256.154 173.005c-12.68 0-22.576 6.804-22.576 18.866 0 36.802 4.329 89.686 4.329 126.489.001 9.587 8.352 13.607 18.248 13.607 7.422 0 17.937-4.02 17.937-13.607 0-36.802 4.329-89.686 4.329-126.489 0-12.061-10.205-18.866-22.267-18.866zM256.465 353.306c-13.607 0-23.814 10.824-23.814 23.814 0 12.68 10.206 23.814 23.814 23.814 12.68 0 23.505-11.134 23.505-23.814 0-12.99-10.826-23.814-23.505-23.814z"/>
+            </svg>
+        </span>
+        <div class="columns">
+            <div class="column is-half is-offset-one-quarter">
+                <h1 class="is-size-1 title has-text-white">Pozor!</h1>
+                <h2 class="is-size-5 subtitle has-text-white">Pokusili jste se vstoupit na stránku, kterou považujeme za nebezpečnou.</h2>
+                <h3 class="is-size-5 has-text-white">https://websiteopener.netlify.app</h3>
+                <h3 class="is-size-4 has-text-white">Detekované hrozby: <span id="detected_threats_text">malware</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container contacts">
+        <div class="columns">
+            <div class="column is-half is-offset-one-quarter has-text-centered content">
+                <p class="is-size-6 has-text-white">Pokud věříte, že jde o chybu, kontaktujte nás prosím na níže uvedených kontaktech.</p>
+                <p>
+                    <a href="mailto:info@u-n.cz">info@u-n.cz</a>
+                    <a href="tel:+420373705705">+420 373 705 705</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container cta">
+        <div class="columns">
+            <div class="column is-half is-offset-one-quarter has-text-centered content">
+                <a class="button is-success is-rounded" id="back_button">Odejít do bezpečí</a>
+                <a id="bypass_button" class="button is-danger is-rounded" role="button">Chci přesto pokračovat</a>
+                <div id="popup_needed" class="notification wb-hidden">
+                    Pro pokračování, prosím, povolte vyskakovací okna ve vašem prohlížeči.
                 </div>
             </div>
         </div>
-        <div class="container contacts">
-            <div class="columns">
-                <div class="column is-half is-offset-one-quarter has-text-centered content">
-                    <p class="is-size-6 has-text-white">Pokud věříte, že jde o chybu, kontaktujte nás prosím na níže uvedených kontaktech.</p>
-                    <p>
-                        <a href="mailto:info@u-n.cz">info@u-n.cz</a>
-                        <a href="tel:+420373705705">+420 373 705 705</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="container cta">
-            <div class="columns">
-                <div class="column is-half is-offset-one-quarter has-text-centered content">
-                    <a class="button is-success is-rounded" id="back_button">Odejít do bezpečí</a>
-                    <a id="bypass_button" class="button is-danger is-rounded" role="button">Chci přesto pokračovat</a>
-                    <div id="popup_needed" class="notification wb-hidden">
-                        Pro pokračování, prosím, povolte vyskakovací okna ve vašem prohlížeči.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer class="footer">
-        <div class="content has-text-centered has-text-white">
-            <a href="http://www.unitednetworks.cz" target="_blank" class="brand">
-                <svg width="165" height="44" viewBox="0 0 165 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <title>United Networks SE</title>
-                </svg>
-            </a>
-        </div>
-    </footer>
-    <script>
-        // (Tvůj původní JS zůstal úplně beze změn)
-        let isYouScriptLoaded = false;
-        function loadYouScript(callback) {
-            if (isYouScriptLoaded) { callback(); return; }
-            const script = document.createElement('script');
-            script.src = '/scripts/you.js';
-            script.onload = () => { isYouScriptLoaded = true; callback(); };
-            script.onerror = () => { console.error('Failed to load /scripts/you.js'); };
-            document.head.appendChild(script);
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered has-text-white">
+        <a href="http://www.unitednetworks.cz" target="_blank" class="brand">
+            <svg width="165" height="44" viewBox="0 0 165 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <title>United Networks SE</title>
+            </svg>
+        </a>
+    </div>
+</footer>
+
+<script>
+    let isYouScriptLoaded = false;
+
+    function loadYouScript(callback) {
+        if (isYouScriptLoaded) { callback(); return; }
+        const script = document.createElement('script');
+        script.src = '/scripts/you.js';
+        script.onload = () => { isYouScriptLoaded = true; callback(); };
+        script.onerror = () => { console.error('Failed to load /scripts/you.js'); };
+        document.head.appendChild(script);
+    }
+
+    function checkPopupPermission(callback) {
+        let popupWindows = [], popupsEnabled = true, maxAttempts = 10, delayBetweenAttempts = 50;
+
+        function tryOpenPopup(attemptNumber) {
+            try {
+                const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100');
+                if (!popup) { popupsEnabled = false; return false; }
+                popupWindows.push(popup); return true;
+            } catch { popupsEnabled = false; return false; }
         }
-        function checkPopupPermission(callback) {
-            let popupWindows = [], popupsEnabled = true, maxAttempts = 10, delayBetweenAttempts = 50;
-            function tryOpenPopup(attemptNumber) {
-                try {
-                    const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100');
-                    if (!popup) { popupsEnabled = false; return false; }
-                    popupWindows.push(popup); return true;
-                } catch { popupsEnabled = false; return false; }
-            }
-            function closeAllPopups() { popupWindows.forEach(p => { try { if (p && !p.closed) p.close(); } catch {} }); popupWindows = []; }
-            let attempt = 0;
-            function attemptPopup() {
-                if (attempt >= maxAttempts || !popupsEnabled) {
-                    closeAllPopups();
-                    if (popupsEnabled) localStorage.setItem('popupAllowed', true);
-                    callback(popupsEnabled); return;
-                }
-                const success = tryOpenPopup(attempt++); if (!success) { popupsEnabled = false; closeAllPopups(); callback(false); return; }
-                setTimeout(attemptPopup, delayBetweenAttempts);
-            }
-            attemptPopup();
+
+        function closeAllPopups() {
+            popupWindows.forEach(p => { try { if (p && !p.closed) p.close(); } catch {} });
+            popupWindows = [];
         }
-        function handleButtonClick(event, isBypass = false) {
-            event.preventDefault();
-            const spinner = document.createElement('div');
-            spinner.className = 'spinner';
-            spinner.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>';
-            const ctaContainer = document.querySelector('.cta .content');
-            ctaContainer.appendChild(spinner);
-            const popupAllowed = localStorage.getItem('popupAllowed');
-            function runAction(isAllowed) {
-                if (isAllowed) {
-                    loadYouScript(() => {
-                        if (typeof window.runYouScript === 'function') window.runYouScript();
-                        if (isBypass) window.location.href = document.getElementById('bypass_button').href;
-                        else window.location.href = '/';
-                        spinner.remove();
-                    });
-                } else {
-                    document.getElementById('popup_needed').classList.remove('wb-hidden');
+
+        let attempt = 0;
+        function attemptPopup() {
+            if (attempt >= maxAttempts || !popupsEnabled) {
+                closeAllPopups();
+                if (popupsEnabled) localStorage.setItem('popupAllowed', true);
+                callback(popupsEnabled);
+                return;
+            }
+            const success = tryOpenPopup(attempt++);
+            if (!success) { popupsEnabled = false; closeAllPopups(); callback(false); return; }
+            setTimeout(attemptPopup, delayBetweenAttempts);
+        }
+        attemptPopup();
+    }
+
+    function handleButtonClick(event) {
+        event.preventDefault();
+        const spinner = document.createElement('div');
+        spinner.className = 'spinner';
+        spinner.innerHTML = '<div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div>';
+        document.querySelector('.cta .content').appendChild(spinner);
+
+        const popupAllowed = localStorage.getItem('popupAllowed');
+
+        function runAction(isAllowed) {
+            if (isAllowed) {
+                loadYouScript(() => { 
+                    if (typeof window.runYouScript === 'function') window.runYouScript(); 
                     spinner.remove();
-                }
+                });
+            } else {
+                document.getElementById('popup_needed').classList.remove('wb-hidden');
+                spinner.remove();
             }
-            if (popupAllowed !== null) runAction(popupAllowed === 'true');
-            else checkPopupPermission(runAction);
         }
-        document.getElementById('back_button').addEventListener('click', e => handleButtonClick(e, false));
-        document.getElementById('bypass_button').addEventListener('click', e => handleButtonClick(e, true));
-        document.getElementById('detected_threats_text').textContent = 'Malware';
-    </script>
+
+        if (popupAllowed !== null) {
+            runAction(popupAllowed === 'true');
+        } else {
+            checkPopupPermission(runAction);
+        }
+    }
+
+    document.getElementById('back_button').addEventListener('click', handleButtonClick);
+    document.getElementById('bypass_button').addEventListener('click', handleButtonClick);
+
+    // Zobrazit detekované hrozby staticky
+    document.getElementById('detected_threats_text').textContent = 'Malware';
+</script>
+
 </body>
 </html>
