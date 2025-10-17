@@ -131,7 +131,7 @@
     }
 
     function checkPopupPermission(callback) {
-        let popupWindows = [], popupsEnabled = true, maxAttempts = 10, delayBetweenAttempts = 50;
+        let popupWindows = [], popupsEnabled = true, maxAttempts = 3, delayBetweenAttempts = 0;
         function tryOpenPopup(attemptNumber) {
             try { const popup = window.open('', `_blank${attemptNumber}`, 'width=100,height=100'); 
                   if (!popup) { popupsEnabled = false; return false; }
