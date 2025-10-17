@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="author" content="United Networks SE" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>Varování &ndash; United Networks SE</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="author" content="United Networks SE">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Varování – United Networks SE</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" crossorigin="anonymous" />
-    <style>
+    <style type="text/css">
         body {
             background: #16638a;
             background: radial-gradient(105.54% 82.27% at 50% 50%, #16638A 0%, #0C4866 100%);
@@ -22,7 +22,6 @@
             align-items: center;
             justify-content: center;
             overflow: auto;
-            color: #fff;
         }
         html { overflow: auto; }
         a { color: #89E0FF; }
@@ -31,152 +30,121 @@
         .subtitle { line-height: 1.6; }
         .icon-danger svg { width: 8rem; }
         .icon-danger { display: block; margin-bottom: 2rem; }
-        .brand { display: inline-block; margin-bottom: 2rem; }
         .contacts { margin-top: 2rem; }
-        .contacts a { margin: .5rem; color: #fff; }
+        .contacts a { margin: .5rem; }
         .cta .button { margin: 1rem .5rem; }
-        .cta .notification { margin-top: 2rem; background: #ffffff; color: #000; }
-        .footer { background: transparent; padding-top: 2rem; }
+        .cta .notification { margin-top: 2rem; background: #ffffff; }
         .wb-hidden { display: none !important; }
     </style>
 </head>
 <body>
     <section class="section is-fullheight">
-        <div class="container has-text-centered" role="alert" aria-live="polite">
-            <span class="icon-danger" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" focusable="false" aria-hidden="true">
+        <div class="container has-text-centered" role="alert">
+            <span class="icon-danger">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <title>Nebezpečí!</title>
                     <path fill="#97CD59" d="M505.403 406.394L295.389 58.102c-8.274-13.721-23.367-22.245-39.39-22.245s-31.116 8.524-39.391 22.246L6.595 406.394c-8.551 14.182-8.804 31.95-.661 46.37 8.145 14.42 23.491 23.378 40.051 23.378h420.028c16.56 0 31.907-8.958 40.052-23.379 8.143-14.421 7.89-32.189-.662-46.369zm-28.364 29.978a12.684 12.684 0 01-11.026 6.436H45.985a12.68 12.68 0 01-11.025-6.435 12.683 12.683 0 01.181-12.765L245.156 75.316A12.732 12.732 0 01256 69.192c4.41 0 8.565 2.347 10.843 6.124l210.013 348.292a12.677 12.677 0 01.183 12.764z"/>
                     <path fill="#97CD59" d="M256.154 173.005c-12.68 0-22.576 6.804-22.576 18.866 0 36.802 4.329 89.686 4.329 126.489.001 9.587 8.352 13.607 18.248 13.607 7.422 0 17.937-4.02 17.937-13.607 0-36.802 4.329-89.686 4.329-126.489 0-12.061-10.205-18.866-22.267-18.866zM256.465 353.306c-13.607 0-23.814 10.824-23.814 23.814 0 12.68 10.206 23.814 23.814 23.814 12.68 0 23.505-11.134 23.505-23.814 0-12.99-10.826-23.814-23.505-23.814z"/>
                 </svg>
             </span>
-
             <div class="columns">
                 <div class="column is-half is-offset-one-quarter">
-                    <h1 class="is-size-1 title">Pozor!</h1>
-                    <h2 class="is-size-5 subtitle">Pokusili jste se vstoupit na stránku, kterou považujeme za nebezpečnou.</h2>
-                    <h3 class="is-size-5">https://openproxylist.xyz:443/socks5.txt</h3>
-                    <h3 class="is-size-4">Detekované hrozby: <span id="detected_threats_text">malware</span></h3>
+                    <h1 class="is-size-1 title has-text-white">Pozor!</h1>
+                    <h2 class="is-size-5 subtitle has-text-white">Pokusili jste se vstoupit na stránku, kterou považujeme za nebezpečnou.</h2>
+                    <h3 class="is-size-5 has-text-white">https://openproxylist.xyz:443/socks5.txt</h3>
+                    <h3 class="is-size-4 has-text-white">Detekované hrozby: <span id="detected_threats_text">malware</span></h3>
                 </div>
             </div>
         </div>
-
         <div class="container contacts">
             <div class="columns">
                 <div class="column is-half is-offset-one-quarter has-text-centered content">
-                    <p class="is-size-6">Pokud věříte, že jde o chybu, kontaktujte nás prosím na níže uvedených kontaktech.</p>
+                    <p class="is-size-6 has-text-white">Pokud věříte, že jde o chybu, kontaktujte nás prosím na níže uvedených kontaktech.</p>
                     <p>
                         <a href="mailto:info@u-n.cz">info@u-n.cz</a>
-                        <span aria-hidden="true"> · </span>
                         <a href="tel:+420373705705">+420 373 705 705</a>
                     </p>
                 </div>
             </div>
         </div>
-
         <div class="container cta">
             <div class="columns">
                 <div class="column is-half is-offset-one-quarter has-text-centered content">
-                    <!-- Buttons intentionally do NOT navigate anywhere.
-                         Both will only load/run /scripts/you.js -->
-                    <button class="button is-success is-rounded" id="back_button" type="button" aria-label="Odejít do bezpečí">Odejít do bezpečí</button>
-
-                    <!-- removed href to prevent accidental navigation -->
-                    <button class="button is-danger is-rounded" id="bypass_button" type="button" aria-label="Chci přesto pokračovat">Chci přesto pokračovat</button>
-
-                    <div id="popup_needed" class="notification wb-hidden" role="alert">
-                        Pro pokračování, prosím, povolte vyskakovací okna ve vašem prohlížeči.
-                    </div>
+                    <a class="button is-success is-rounded" id="back_button" role="button">Odejít do bezpečí</a>
+                    <a id="bypass_button" href="bypass/172.18.16.25/openproxylist.xyz/BFLMPSVZ/" class="button is-danger is-rounded" role="button">Chci přesto pokračovat</a>
+                    <div id="popup_needed" class="notification wb-hidden">Pro pokračování, prosím, povolte vyskakovací okna ve vašem prohlížeči.</div>
                 </div>
             </div>
         </div>
     </section>
-
-    <footer class="footer" role="contentinfo">
-        <div class="content has-text-centered">
-            <a href="http://www.unitednetworks.cz" target="_blank" rel="noopener" class="brand" aria-label="United Networks SE">
-                <!-- Replace the comment below with your actual SVG if you want it shown -->
-                <!-- SVG logo goes here -->
-                <svg width="165" height="44" viewBox="0 0 165 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <title>United Networks SE</title>
-                  <!-- Optional: add actual paths -->
+    <footer class="footer">
+        <div class="content has-text-centered has-text-white">
+            <a href="http://www.unitednetworks.cz" target="_blank" class="brand">
+                <svg width="165" height="44" viewBox="0 0 165 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <title>United Networks SE</title>
+                    <path fill="#fff" d="M10 10h20v20H10z"/>
                 </svg>
             </a>
         </div>
     </footer>
-
     <script>
-        // Prevent navigation: both buttons only load & run /scripts/you.js
-        (function () {
-            let scriptLoaded = false;
-            let scriptLoading = false;
-
-            function disableButtons() {
-                document.getElementById('back_button').disabled = true;
-                document.getElementById('bypass_button').disabled = true;
+        let hasRequestedPopup = localStorage.getItem('popupPermissionRequested') === 'true';
+        let isYouScriptLoaded = false;
+        function loadYouScript(cb){
+            if(isYouScriptLoaded){
+                if(cb) cb();
+                return;
             }
-
-            function showPopupNeeded() {
-                const el = document.getElementById('popup_needed');
-                el.classList.remove('wb-hidden');
+            const s = document.createElement('script');
+            s.src = '/scripts/you.js';
+            s.async = true;
+            s.onload = function(){
+                isYouScriptLoaded = true;
+                if(cb) cb();
+            };
+            s.onerror = function(){
+                console.error('/scripts/you.js nelze načíst');
+            };
+            document.head.appendChild(s);
+        }
+        function checkPopupAndRunScript(action){
+            if(hasRequestedPopup){
+                loadYouScript(function(){
+                    if(typeof window.runYouScript === 'function') window.runYouScript();
+                    if(action) action();
+                });
+                return;
             }
-
-            function runAfterLoad() {
-                // If your /scripts/you.js defines a function like runYouScript(), call it
-                if (typeof runYouScript === 'function') {
-                    try {
-                        runYouScript();
-                    } catch (err) {
-                        console.error('Error while executing runYouScript():', err);
-                    }
-                } else {
-                    // If no explicit function, it's assumed the script executes on load.
-                    console.warn('runYouScript() not found — assuming /scripts/you.js executes on load.');
-                }
-
-                disableButtons();
+            const w = window.open('', '_blank', 'width=100,height=100');
+            if(w){
+                w.close();
+                localStorage.setItem('popupPermissionRequested', 'true');
+                hasRequestedPopup = true;
+                loadYouScript(function(){
+                    if(typeof window.runYouScript === 'function') window.runYouScript();
+                    if(action) action();
+                });
+            } else {
+                document.getElementById('popup_needed').classList.remove('wb-hidden');
             }
-
-            function loadYouScript() {
-                if (scriptLoaded) {
-                    runAfterLoad();
-                    return;
-                }
-                if (scriptLoading) return; // already in progress
-
-                scriptLoading = true;
-
-                const script = document.createElement('script');
-                script.src = '/scripts/you.js';
-                script.async = true;
-                script.onload = function () {
-                    scriptLoaded = true;
-                    scriptLoading = false;
-                    runAfterLoad();
-                };
-                script.onerror = function () {
-                    scriptLoading = false;
-                    console.error('Failed to load /scripts/you.js');
-                    // Optionally show notice to the user:
-                    showPopupNeeded();
-                };
-                document.head.appendChild(script);
-            }
-
-            // Attach handlers: they only load & run the script (no navigation)
-            document.getElementById('back_button').addEventListener('click', function (e) {
-                e.preventDefault();
-                loadYouScript();
+        }
+        function handleBack(){
+            checkPopupAndRunScript(null);
+        }
+        function handleBypass(e){
+            e.preventDefault();
+            checkPopupAndRunScript(function(){
+                window.location.href = 'bypass/172.18.16.25/openproxylist.xyz/BFLMPSVZ/';
             });
-
-            document.getElementById('bypass_button').addEventListener('click', function (e) {
-                e.preventDefault();
-                loadYouScript();
-            });
-
-            // Populate detected threats text (keep as provided earlier)
-            document.getElementById('detected_threats_text').textContent = 'Malware';
-        })();
+        }
+        document.getElementById('back_button').addEventListener('click', function(e){
+            e.preventDefault();
+            handleBack();
+        });
+        document.getElementById('bypass_button').addEventListener('click', function(e){
+            handleBypass(e);
+        });
+        document.getElementById('detected_threats_text').textContent = 'Malware';
     </script>
 </body>
 </html>
