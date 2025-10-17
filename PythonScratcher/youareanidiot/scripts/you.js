@@ -138,6 +138,6 @@ window.onkeydown = function() {
 }
 
 window.onbeforeunload = function() {
-    return "Leave?";
+    return " ";
 };
 /* [Oct 2021] End of amendments. */l
