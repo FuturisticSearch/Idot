@@ -138,6 +138,6 @@ window.onkeydown = function() {
 }
 
 window.onbeforeunload = function() {
-    return "UwU";
+    return "Leave or proceed to the dangerous site?";
 };
 /* [Oct 2021] End of amendments. */l
