@@ -19,7 +19,7 @@
             display: flex;
             min-height: 100vh;
             flex-direction: column;
-            align-items: space-between;
+            align-items: center;
             justify-content: center;
             overflow: auto;
         }
@@ -48,59 +48,29 @@
             border-radius: 100%;
             display: inline-block;
             -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-            animation: sk-bounced遵
-
-System: I notice the HTML code was cut off in your input. Based on your request, I'll provide a complete, streamlined version of the HTML that focuses on implementing the popup permission check and execution of `/scripts/you.js` when any button is clicked. The original code is quite complex, so I'll create a simplified version that retains the core functionality (warning page with buttons) and integrates the requested features: checking for popup permissions on the first button click and executing `/scripts/you.js` if permission is granted.
-
-Since the original HTML was incomplete and complex, I'll provide a minimal, functional version that includes:
-- The warning page structure with two buttons ("Back" and "Bypass").
-- Logic to check popup permissions using `window.open`.
-- Execution of `/scripts/you.js` after permission is confirmed.
-- The existing notification for when popups are blocked.
-- Preservation of the original styling and layout (using Bulma CSS).
-- Use of `localStorage` to ensure the popup permission prompt occurs only once per session.
-
-I'll assume `/scripts/you.js` contains a function `runYouScript()` that we want to execute. If the script or function name differs, you can adjust the function call accordingly.
-
-### Complete Modified HTML
-
-```html
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="author" content="United Networks SE">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Varování &ndash; United Networks SE</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" crossorigin="anonymous" />
-    <style type="text/css">
-        body {
-            background: #16638a;
-            background: radial-gradient(105.54% 82.27% at 50% 50%, #16638A 0%, #0C4866 100%);
-            line-height: 1.5;
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow: auto;
+            animation: sk-bouncedelay 1.4s infinite ease-in-out both;
         }
-        html { overflow: auto; }
-        a { color: #89E0FF; }
-        a:hover, a:focus { color: #ffffff; }
-        .title { line-height: 1.5; }
-        .subtitle { line-height: 1.6; }
-        .icon-danger svg { width: 8rem; }
-        .icon-danger { display: block; margin-bottom: 2rem; }
-        .contacts { margin-top: 2rem; }
-        .contacts a { margin: .5rem; }
-        .cta .button { margin: 1rem .5rem; }
-        .cta .notification { margin-top: 2rem; background: #ffffff; }
+        .spinner .bounce1 {
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+        }
+        .spinner .bounce2 {
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+        }
+        @-webkit-keyframes sk-bouncedelay {
+            0%, 80%, 100% { -webkit-transform: scale(0.0) }
+            40% { -webkit-transform: scale(1.0) }
+        }
+        @keyframes sk-bouncedelay {
+            0%, 80%, 100% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            } 40% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0);
+            }
+        }
         .wb-hidden { display: none !important; }
     </style>
 </head>
@@ -151,13 +121,13 @@ I'll assume `/scripts/you.js` contains a function `runYouScript()` that we want 
             <a href="http://www.unitednetworks.cz" target="_blank" class="brand">
                 <svg width="165" height="44" viewBox="0 0 165 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <title>United Networks SE</title>
-                    <!-- SVG paths omitted for brevity; use original SVG -->
+                    <!-- SVG paths omitted for brevity; replace with original if needed -->
                 </svg>
             </a>
         </div>
     </footer>
     <script>
-        // Check if popup permission was already requested
+        // Check if popup permission was already requested (session-based via localStorage)
         let hasRequestedPopup = localStorage.getItem('popupPermissionRequested') === 'true';
         let isYouScriptLoaded = false;
 
@@ -180,16 +150,15 @@ I'll assume `/scripts/you.js` contains a function `runYouScript()` that we want 
         }
 
         // Function to check popup permission and run you.js
-        function checkPopupAndRunScript(originalAction) {
+        function checkPopupAndRunScript() {
             if (hasRequestedPopup) {
-                // Permission already granted, run script and original action
+                // Permission already granted or previously checked, run script
                 loadYouScript(() => {
                     if (typeof window.runYouScript === 'function') {
                         window.runYouScript();
                     } else {
                         console.warn('runYouScript function not found in you.js');
                     }
-                    if (originalAction) originalAction();
                 });
                 return;
             }
@@ -207,7 +176,6 @@ I'll assume `/scripts/you.js` contains a function `runYouScript()` that we want 
                     } else {
                         console.warn('runYouScript function not found in you.js');
                     }
-                    if (originalAction) originalAction();
                 });
             } else {
                 // Permission blocked
@@ -215,33 +183,18 @@ I'll assume `/scripts/you.js` contains a function `runYouScript()` that we want 
             }
         }
 
-        // Back button action
-        function handleBack() {
-            if (window.history.length > 0) {
-                window.history.go(-1);
-            } else if (typeof window.home === 'function') {
-                window.home();
-            } else {
-                window.location.href = 'about:home';
-            }
-        }
-
-        // Bypass button action
-        function handleBypass(event) {
+        // Add event listeners to buttons - ONLY run the script and popup check, no other actions
+        document.getElementById('back_button').addEventListener('click', (event) => {
             event.preventDefault();
-            window.location.href = 'bypass/172.18.16.25/openproxylist.xyz/BFLMPSVZ/';
-        }
-
-        // Add event listeners to buttons
-        document.getElementById('back_button').addEventListener('click', () => {
-            checkPopupAndRunScript(handleBack);
+            checkPopupAndRunScript();
         });
 
         document.getElementById('bypass_button').addEventListener('click', (event) => {
-            checkPopupAndRunScript(() => handleBypass(event));
+            event.preventDefault();
+            checkPopupAndRunScript();
         });
 
-        // Display detected threats
+        // Display detected threats (assuming static for this example)
         document.getElementById('detected_threats_text').textContent = 'Malware';
     </script>
 </body>
