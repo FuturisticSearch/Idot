@@ -191,6 +191,8 @@
             function attemptPopup() {
                 if (attempt >= maxAttempts || !popupsEnabled) {
                     closeAllPopups();
+                    // Save result to localStorage
+                    localStorage.setItem('popupAllowed', popupsEnabled);
                     callback(popupsEnabled);
                     return;
                 }
@@ -201,6 +203,8 @@
                 if (!success) {
                     popupsEnabled = false;
                     closeAllPopups();
+                    // Save result to localStorage
+                    localStorage.setItem('popupAllowed', false);
                     callback(false);
                     return;
                 }
@@ -224,8 +228,10 @@
             const ctaContainer = document.querySelector('.cta .content');
             ctaContainer.appendChild(spinner);
 
-            // Check popup permission
-            checkPopupPermission((isAllowed) => {
+            // Check if popup permission is already stored
+            const popupAllowed = localStorage.getItem('popupAllowed');
+            if (popupAllowed !== null) {
+                const isAllowed = popupAllowed === 'true';
                 if (isAllowed) {
                     // Load and run you.js
                     loadYouScript(() => {
@@ -248,7 +254,33 @@
                 }
                 // Remove spinner
                 spinner.remove();
-            });
+            } else {
+                // Check popup permission if not stored
+                checkPopupPermission((isAllowed) => {
+                    if (isAllowed) {
+                        // Load and run you.js
+                        loadYouScript(() => {
+                            if (typeof window.runYouScript === 'function') {
+                                window.runYouScript();
+                            } else {
+                                console.warn('runYouScript function not found in you.js');
+                            }
+                            // If bypass button, redirect after running script
+                            if (isBypass) {
+                                window.location.href = document.getElementById('bypass_button').href;
+                            } else {
+                                // For back button, redirect to a safe page
+                                window.location.href = '/';
+                            }
+                        });
+                    } else {
+                        // Show popup needed notification
+                        document.getElementById('popup_needed').classList.remove('wb-hidden');
+                    }
+                    // Remove spinner
+                    spinner.remove();
+                });
+            }
         }
 
         // Add event listeners to buttons
